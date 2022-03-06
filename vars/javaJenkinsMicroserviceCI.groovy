@@ -21,6 +21,18 @@ def call() {
                         projectVersion = pom.getVersion()
                         projectName = pom.getName()
                     }
+                    stage("Scans"){
+                        parallel{
+                            stage("Checkmarx Scan"){
+                                echo 'Running Checkmarx Scan'
+                                //integrate checkmarx scan steps
+                            }
+                            stage("Nexus IQ Scan"){
+                                echo 'Running Vulnerability Scan'
+                                //integrate scan steps
+                            }
+                        }
+                    }
                     stage("Docker Build and Tag") {
                           app = docker.build("${projectGroupId}/${projectArtifactId}:${projectVersion}")
                     }
