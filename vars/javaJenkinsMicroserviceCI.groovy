@@ -22,7 +22,7 @@ def call() {
                         projectName = pom.getName()
                     }
                     stage("Scans"){
-                        parallel{
+                        parallel {
                             stage("Checkmarx Scan"){
                                 echo 'Running Checkmarx Scan'
                                 //integrate checkmarx scan steps
