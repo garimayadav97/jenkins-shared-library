@@ -5,12 +5,12 @@ def call() {
                     stage("Checkout") {
                           checkout scm
                     }
-                    stage("Code Scan and Quality Check"){
+                    stage("Code Scan and Quality Check"){   
                         echo 'Running Checkmarx Scan'
-                        //integrate checkmarx code Scan
+                        //integrate checkmarx code Scan for code analysis
 
                         echo 'Running Sonarqube Scan'
-                        //integrate sonarqube jenkins plugin          
+                        //integrate sonarqube jenkins plugin for code quality check     
                     }
                     stage("Maven Build") {
                           bat "mvn clean install"
