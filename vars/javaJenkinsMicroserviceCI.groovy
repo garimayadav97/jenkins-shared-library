@@ -40,7 +40,7 @@ def call() {
                     }
             }
             catch (Exception e) {
-              currentBuild.currentResult='FAILURE'
+              currentBuild.result='FAILURE'
               echo 'Exception occurred: ' + e.toString()
               emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}, build ${env.BUILD_NUMBER} failed\nMore info at: ${env.BUILD_URL}",
                         recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
