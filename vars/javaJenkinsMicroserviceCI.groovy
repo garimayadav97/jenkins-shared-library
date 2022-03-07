@@ -3,15 +3,23 @@ def call() {
     node {
             try {
                     stage("Checkout") {
-                          git branch: 'master',
-                            url: 'https://github.com/garimayadav97/sample-springboot-project.git'
-           
+                          checkout scm
+                    }
+                    stage("Code Scan and Quality Check"){
+                        echo 'Running Checkmarx Scan'
+                        //integrate checkmarx code Scan
+
+                        echo 'Running Sonarqube Scan'
+                        //integrate sonarqube jenkins plugin          
                     }
                     stage("Maven Build") {
                           bat "mvn clean install"
                     }
                     stage("Unit Tests") {
                           bat "mvn verify"
+                    }
+                    stage("Security Scan") {
+                        //integrate nexus IQ scan for vulnerability-scanning
                     }
                     stage("Extract Info") {
                         bat "mvn -N help:effective-pom -Doutput=target/pom-effective.xml"
@@ -20,18 +28,6 @@ def call() {
                         projectGroupId = pom.getGroupId()
                         projectVersion = pom.getVersion()
                         projectName = pom.getName()
-                    }
-                    stage("Scans"){
-                        parallel {
-                            stage("Checkmarx Scan"){
-                                echo 'Running Checkmarx Scan'
-                                //integrate checkmarx scan steps
-                            }
-                            stage("Nexus IQ Scan"){
-                                echo 'Running Vulnerability Scan'
-                                //integrate scan steps
-                            }
-                        }
                     }
                     stage("Docker Build and Tag") {
                           app = docker.build("${projectGroupId}/${projectArtifactId}:${projectVersion}")
