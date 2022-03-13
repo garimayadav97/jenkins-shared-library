@@ -35,8 +35,10 @@ def call() {
                     stage("Docker Push") {
                         echo 'Pushing to docker repository'
                         //Push to specific docker registory
-                        //docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials')
-                        //app.push("${projectVersion}")
+                        
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-credentials') {
+                            app.push("${projectVersion}")
+                        } 
                     }
             }
             catch (Exception e) {
