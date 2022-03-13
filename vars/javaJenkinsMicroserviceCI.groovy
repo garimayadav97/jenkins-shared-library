@@ -16,7 +16,7 @@ def call() {
                           bat "mvn clean install"
                     }
                     stage("Unit Tests") {
-                          bat "mvn verify"
+                          bat "mvn test"
                     }
                     stage("Security Scan") {
                         //integrate nexus IQ scan for vulnerability-scanning
